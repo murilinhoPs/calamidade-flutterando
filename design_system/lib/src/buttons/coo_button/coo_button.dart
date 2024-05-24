@@ -186,6 +186,7 @@ class CooButton extends StatelessWidget {
           : ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: _backgroundColor,
+                foregroundColor: colors.lightGrey,
                 fixedSize: size,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
