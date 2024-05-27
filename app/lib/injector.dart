@@ -12,6 +12,7 @@ import 'package:coopartilhar/app/features/auth/interactor/controllers/login_cont
 import 'package:coopartilhar/app/features/auth/interactor/repositories/i_auth_repository.dart';
 import 'package:coopartilhar/app/features/bank_account/data/repositories/bank_account_repository_impl.dart';
 import 'package:coopartilhar/app/features/bank_account/interactor/controllers/bank_account_controller.dart';
+import 'package:coopartilhar/app/features/bank_account/interactor/controllers/new_bank_account_controller.dart';
 import 'package:coopartilhar/app/features/bank_account/interactor/repositories/i_bank_account_repository.dart';
 import 'package:coopartilhar/app/features/file/data/repositories/file_repository_impl.dart';
 import 'package:coopartilhar/app/features/file/data/repositories/i_file_repository.dart';
@@ -50,6 +51,7 @@ final injector = AutoInjector(
     injector.addLazySingleton<IBankAccountRepository>(
         BankAccountRepositoryImpl.new);
     injector.addLazySingleton(BankAccountController.new);
+    injector.addLazySingleton(NewBankAccountController.new);
 
     injector.add(HomeController.new);
     injector.add<IHomeRepository>(HomeRepositoryImpl.new);
