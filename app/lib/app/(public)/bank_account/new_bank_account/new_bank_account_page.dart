@@ -92,13 +92,14 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                       ),
                       TextFormField(
                         controller: controller.bankNumberController,
+                        style: textTheme.displaySmall,
                         decoration: InputDecoration(
                           hintText: 'Informe o nome do Banco',
                           hintStyle: hintStyle,
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Identificação do Banco não pode estar vazia';
+                            return 'Nome do Banco não pode estar vazio';
                           }
                           return null;
                         },
@@ -106,6 +107,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                       const TextFieldInformation(text: 'Agência'),
                       TextFormField(
                         controller: controller.agencyNumberController,
+                        style: textTheme.displaySmall,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           hintText: 'Informe a agência',
@@ -129,6 +131,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                                 TextFormField(
                                   controller:
                                       controller.accountNumberController,
+                                  style: textTheme.displaySmall,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     hintText: 'Insira a conta',
@@ -136,7 +139,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                                   ),
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Não pode estar vazia';
+                                      return 'Obrigatório';
                                     }
                                     return null;
                                   },
@@ -152,6 +155,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                                 const TextFieldInformation(text: 'Digíto'),
                                 TextFormField(
                                   controller: controller.digitNumberController,
+                                  style: textTheme.displaySmall,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     hintText: 'Insira o Digito',
@@ -159,7 +163,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                                   ),
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Não pode estar vazio';
+                                      return 'Obrigatório';
                                     }
                                     return null;
                                   },
@@ -172,6 +176,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                       const TextFieldInformation(text: 'Chave PIX da Conta'),
                       TextFormField(
                         controller: controller.pixKeyController,
+                        style: textTheme.displaySmall,
                         decoration: InputDecoration(
                           hintText: 'Informe a chave PIX',
                           hintStyle: hintStyle,

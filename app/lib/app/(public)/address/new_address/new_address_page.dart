@@ -96,6 +96,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 text: 'Identificação do Endereço'),
                             TextFormField(
                               controller: controller.identificationController,
+                              style: textTheme.displaySmall,
                               decoration: InputDecoration(
                                 hintText: 'Insira a Identificação do Endereço',
                                 hintStyle: hintStyle,
@@ -110,6 +111,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             const TextInformationExtends(text: 'Logradouro'),
                             TextFormField(
                               controller: controller.addressController,
+                              style: textTheme.displaySmall,
                               decoration: InputDecoration(
                                 hintText: 'Insira o logradouro',
                                 hintStyle: hintStyle,
@@ -124,6 +126,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             const TextInformationExtends(text: 'Número'),
                             TextFormField(
                               controller: controller.addressNumberController,
+                              style: textTheme.displaySmall,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: 'Insira o número',
@@ -139,6 +142,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             const TextInformationExtends(text: 'Cidade'),
                             TextFormField(
                               controller: controller.cityController,
+                              style: textTheme.displaySmall,
                               decoration: InputDecoration(
                                 hintText: 'Insira a cidade',
                                 hintStyle: hintStyle,
@@ -153,6 +157,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             const TextInformationExtends(text: 'UF'),
                             TextFormField(
                               controller: controller.ufController,
+                              style: textTheme.displaySmall,
                               maxLength: 2,
                               decoration: InputDecoration(
                                 hintText: 'Insira a UF',
@@ -168,6 +173,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             const TextInformationExtends(text: 'CEP'),
                             TextFormField(
                               controller: controller.zipCodeController,
+                              style: textTheme.displaySmall,
                               keyboardType: TextInputType.number,
                               inputFormatters: [ZipCodeInputFormatter()],
                               decoration: InputDecoration(
@@ -184,6 +190,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             const TextInformationExtends(text: 'Complemento'),
                             TextFormField(
                               controller: controller.complementController,
+                              style: textTheme.displaySmall,
                               decoration: InputDecoration(
                                 hintText: 'Insira o complemento se houver',
                                 hintStyle: hintStyle,
