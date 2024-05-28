@@ -1,5 +1,4 @@
 import 'package:coopartilhar/app/features/bank_account/entities/bank_account.dart';
-import 'package:coopartilhar/app/features/bank_account/entities/new_bank_account_navigation.dart';
 import 'package:coopartilhar/app/features/bank_account/interactor/controllers/bank_account_controller.dart';
 import 'package:coopartilhar/app/features/bank_account/interactor/states/bank_states.dart';
 import 'package:coopartilhar/injector.dart';
@@ -52,15 +51,6 @@ class _BankAccountPageState extends State<BankAccountPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final newBankAccount = NewBankAccountNavigation(
-      title: 'Cadastrar Conta Bancária',
-      bankHintText: 'Informe o Banco do Assistido',
-      agencyHintText: 'Informe a agência bancária do Assistido',
-      accountHintText: 'Insira a conta',
-      accountDigitHintText: 'Insira o Digito',
-      pixKeyHintText: 'Informe a chave PIX do Assistido',
-      buttonTitle: 'Voltar',
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -144,7 +134,9 @@ class _BankAccountPageState extends State<BankAccountPage> {
                               label: 'Cadastrar Conta Bancária',
                               onPressed: () => Routefly.push(
                                 routePaths.bankAccount.newBankAccount,
-                                arguments: newBankAccount,
+                                arguments: {
+                                  'isRegister': true,
+                                },
                               ),
                             ),
                           ],
