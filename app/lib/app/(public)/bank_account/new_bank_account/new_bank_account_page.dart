@@ -1,8 +1,5 @@
 import 'package:coopartilhar/app/(public)/bank_account/new_bank_account/widgets/text_input_information.dart';
-import 'package:coopartilhar/app/features/bank_account/entities/bank_account.dart';
-import 'package:coopartilhar/app/features/bank_account/entities/new_bank_account_navigation.dart';
 import 'package:coopartilhar/app/features/bank_account/interactor/controllers/new_bank_account_controller.dart';
-import 'package:coopartilhar/app/features/bank_account/interactor/states/new_bank_states.dart';
 import 'package:coopartilhar/injector.dart';
 import 'package:coopartilhar/routes.dart';
 import 'package:core_module/core_module.dart';
@@ -24,14 +21,11 @@ class NewBankAccountPage extends StatefulWidget {
 
 class _NewBankAccountPageState extends State<NewBankAccountPage> {
   final controller = injector.get<NewBankAccountController>();
-  late NewBankAccountNavigation navigationData;
+  bool isRegister = false;
 
   @override
   void initState() {
-    navigationData = Routefly.query.arguments != null
-        ? Routefly.query.arguments as NewBankAccountNavigation
-        : NewBankAccountNavigation();
-
+    isRegister = Routefly.query.arguments['isRegister'] as bool;
     controller.addListener(listener);
     super.initState();
   }
@@ -39,18 +33,15 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
   @override
   void dispose() {
     controller.removeListener(listener);
-    controller.dispose();
     super.dispose();
   }
 
   void listener() {
     return switch (controller.state) {
-      SuccessState(:final BankAccountEntity data) => {
+      SuccessState() => {
           Alerts.showSuccess(context, 'Conta adicionada com sucesso!'),
-          navigationData.isRegisterFlow
-              ? Routefly.navigate(
-                  routePaths.successState,
-                )
+          isRegister
+              ? Routefly.navigate(routePaths.successState)
               : Routefly.pop(context)
         },
       ErrorState(:final exception) =>
@@ -68,8 +59,10 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(navigationData.title,
-            style: textTheme.displayLarge?.copyWith(color: colors.textColor)),
+        title: Text(
+          isRegister ? 'Confirmar Conta Bancária' : 'Cadastrar Conta Bancária',
+          style: textTheme.displayLarge?.copyWith(color: colors.textColor),
+        ),
         leading: IconButton(
             icon: Icon(UIcons.regularStraight.angle_small_left),
             onPressed: () => Routefly.pop(context)),
@@ -100,12 +93,12 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                       TextFormField(
                         controller: controller.bankNumberController,
                         decoration: InputDecoration(
-                          hintText: navigationData.bankHintText,
+                          hintText: 'Informe o nome do Banco',
                           hintStyle: hintStyle,
                         ),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return 'Identificação do Banco não pode estar vazio';
+                            return 'Identificação do Banco não pode estar vazia';
                           }
                           return null;
                         },
@@ -115,7 +108,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                         controller: controller.agencyNumberController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          hintText: navigationData.agencyHintText,
+                          hintText: 'Informe a agência',
                           hintStyle: hintStyle,
                         ),
                         validator: (String? value) {
@@ -138,12 +131,12 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                                       controller.accountNumberController,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                    hintText: navigationData.accountHintText,
+                                    hintText: 'Insira a conta',
                                     hintStyle: hintStyle,
                                   ),
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Não pode estar vazio';
+                                      return 'Não pode estar vazia';
                                     }
                                     return null;
                                   },
@@ -161,13 +154,12 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                                   controller: controller.digitNumberController,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                    hintText:
-                                        navigationData.accountDigitHintText,
+                                    hintText: 'Insira o Digito',
                                     hintStyle: hintStyle,
                                   ),
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Não pode estar vazia';
+                                      return 'Não pode estar vazio';
                                     }
                                     return null;
                                   },
@@ -181,7 +173,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                       TextFormField(
                         controller: controller.pixKeyController,
                         decoration: InputDecoration(
-                          hintText: navigationData.pixKeyHintText,
+                          hintText: 'Informe a chave PIX',
                           hintStyle: hintStyle,
                         ),
                         validator: (String? value) {
@@ -201,7 +193,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
       ),
       bottomNavigationBar: SafeArea(
         child: CooButton.primary(
-          label: navigationData.buttonTitle,
+          label: isRegister ? 'Finalizar Cadastro' : 'Voltar',
           onPressed: controller.save,
         ),
       ),
