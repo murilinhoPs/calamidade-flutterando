@@ -9,6 +9,7 @@ class BankAccountAdapter {
       account: json['account'],
       digit: json['digit'],
       keyPix: json['keyPix'],
+      userId: json['userId'],
     );
   }
 
@@ -19,6 +20,7 @@ class BankAccountAdapter {
     data['account'] = address.account;
     data['digit'] = address.digit;
     data['keyPix'] = address.keyPix;
+    data['userId'] = address.userId;
     return data;
   }
 }

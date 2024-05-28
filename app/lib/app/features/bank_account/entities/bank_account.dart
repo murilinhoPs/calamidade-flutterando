@@ -6,6 +6,7 @@ class BankAccountEntity extends Entity {
   String? account;
   String? digit;
   String? keyPix;
+  int? userId;
 
   BankAccountEntity(
     super.id, {
@@ -14,5 +15,6 @@ class BankAccountEntity extends Entity {
     this.account,
     this.digit,
     this.keyPix,
+    this.userId,
   });
 }
