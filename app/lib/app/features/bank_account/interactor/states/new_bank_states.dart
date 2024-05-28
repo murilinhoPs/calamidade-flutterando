@@ -11,6 +11,6 @@ class NewBankAccountSuccessState extends SuccessState<BankAccountEntity> {
   });
 }
 
-class NewBankAccountErrorState<BaseException> extends ErrorState {
+class NewBankAccountErrorState<NewBankAccountException> extends ErrorState {
   NewBankAccountErrorState({required super.exception});
 }
