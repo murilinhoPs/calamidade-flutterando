@@ -40,10 +40,6 @@ class _RegisterPageState extends State<RegisterPage> {
           arguments: {
             'isRegister': true,
             'title': 'Confirmar Endereço',
-            'callback': () {
-              Routefly.navigate(routePaths
-                  .affiliatedFirstAction.presentation.affiliatedFirstAction);
-            }
           },
         ),
       ErrorState(:final exception) =>

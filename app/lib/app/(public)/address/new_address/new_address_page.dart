@@ -4,6 +4,7 @@ import 'package:coopartilhar/app/features/address/interactor/controllers/new_add
 import 'package:coopartilhar/app/features/address/interactor/states/address_location_states.dart';
 import 'package:coopartilhar/app/features/address/interactor/states/address_states.dart';
 import 'package:coopartilhar/injector.dart';
+import 'package:coopartilhar/routes.dart';
 import 'package:core_module/core_module.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +19,14 @@ class NewAddressPage extends StatefulWidget {
 
 class _NewAddressPageState extends State<NewAddressPage> {
   final NewAddressController controller = injector.get<NewAddressController>();
-  VoidCallback? callback;
+  bool isRegister = false;
   String title = '';
   @override
   void initState() {
     if (Routefly.query.arguments != null) {
-      callback = Routefly.query.arguments['callback'];
+      isRegister = Routefly.query.arguments['isRegister'];
       title = Routefly.query.arguments['title'] ?? widget.title;
     }
-
     super.initState();
     controller.addListener(listener);
   }
@@ -42,7 +42,14 @@ class _NewAddressPageState extends State<NewAddressPage> {
       SuccessState(:final AddressEntity data) => {
           Alerts.showSuccess(
               context, 'Endereço "${data.addressName}" criado com sucesso!'),
-          callback != null ? () : Routefly.pop(context)
+          isRegister
+              ? Routefly.navigate(
+                  routePaths.bankAccount.newBankAccount,
+                  arguments: {
+                    'isRegister': true,
+                  },
+                )
+              : Routefly.pop(context)
         },
       ErrorState(:final exception) =>
         Alerts.showFailure(context, exception.message),
@@ -57,6 +64,8 @@ class _NewAddressPageState extends State<NewAddressPage> {
   Widget build(BuildContext context) {
     final colors = CoopartilharColors.of(context);
     final textTheme = Theme.of(context).textTheme;
+    final hintStyle = textTheme.bodySmall?.copyWith(color: colors.textColor2);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -84,11 +93,12 @@ class _NewAddressPageState extends State<NewAddressPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const TextInformationExtends(
-                                text: 'Identificação do Endereço*'),
+                                text: 'Identificação do Endereço'),
                             TextFormField(
                               controller: controller.identificationController,
-                              decoration: const InputDecoration(
-                                hintText: 'Identificação do Endereço',
+                              decoration: InputDecoration(
+                                hintText: 'Insira a Identificação do Endereço',
+                                hintStyle: hintStyle,
                               ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
@@ -97,11 +107,12 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 return null;
                               },
                             ),
-                            const TextInformationExtends(text: 'Logradouro*'),
+                            const TextInformationExtends(text: 'Logradouro'),
                             TextFormField(
                               controller: controller.addressController,
-                              decoration: const InputDecoration(
-                                hintText: 'Logradouro',
+                              decoration: InputDecoration(
+                                hintText: 'Insira o logradouro',
+                                hintStyle: hintStyle,
                               ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
@@ -110,12 +121,13 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 return null;
                               },
                             ),
-                            const TextInformationExtends(text: 'Número*'),
+                            const TextInformationExtends(text: 'Número'),
                             TextFormField(
                               controller: controller.addressNumberController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintText: 'Número',
+                              decoration: InputDecoration(
+                                hintText: 'Insira o número',
+                                hintStyle: hintStyle,
                               ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
@@ -124,11 +136,12 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 return null;
                               },
                             ),
-                            const TextInformationExtends(text: 'Cidade*'),
+                            const TextInformationExtends(text: 'Cidade'),
                             TextFormField(
                               controller: controller.cityController,
-                              decoration: const InputDecoration(
-                                hintText: 'Cidade',
+                              decoration: InputDecoration(
+                                hintText: 'Insira a cidade',
+                                hintStyle: hintStyle,
                               ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
@@ -137,12 +150,13 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 return null;
                               },
                             ),
-                            const TextInformationExtends(text: 'UF*'),
+                            const TextInformationExtends(text: 'UF'),
                             TextFormField(
                               controller: controller.ufController,
                               maxLength: 2,
-                              decoration: const InputDecoration(
-                                hintText: 'UF',
+                              decoration: InputDecoration(
+                                hintText: 'Insira a UF',
+                                hintStyle: hintStyle,
                               ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
@@ -151,13 +165,14 @@ class _NewAddressPageState extends State<NewAddressPage> {
                                 return null;
                               },
                             ),
-                            const TextInformationExtends(text: 'CEP*'),
+                            const TextInformationExtends(text: 'CEP'),
                             TextFormField(
                               controller: controller.zipCodeController,
                               keyboardType: TextInputType.number,
                               inputFormatters: [ZipCodeInputFormatter()],
-                              decoration: const InputDecoration(
-                                hintText: 'CEP',
+                              decoration: InputDecoration(
+                                hintText: 'Informe o CEP',
+                                hintStyle: hintStyle,
                               ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
@@ -169,8 +184,9 @@ class _NewAddressPageState extends State<NewAddressPage> {
                             const TextInformationExtends(text: 'Complemento'),
                             TextFormField(
                               controller: controller.complementController,
-                              decoration: const InputDecoration(
-                                hintText: 'Complemento',
+                              decoration: InputDecoration(
+                                hintText: 'Insira o complemento se houver',
+                                hintStyle: hintStyle,
                               ),
                             ),
                             const TextInformationExtends(
@@ -187,13 +203,23 @@ class _NewAddressPageState extends State<NewAddressPage> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      CooButton.primary(
-                        label:
-                            (state is LoadingState) ? 'Aguarde...' : 'Salvar',
-                        onPressed: controller.save,
-                        size: const Size(double.infinity, 60),
-                        enable: state is! AddressLoadingState &&
-                            state is! LoadingState,
+                      SafeArea(
+                        child: CooButton.primary(
+                          label: (state is LoadingState)
+                              ? 'Aguarde...'
+                              : 'Próximo',
+                          onPressed: () => isRegister
+                              ? Routefly.push(
+                                  routePaths.bankAccount.newBankAccount,
+                                  arguments: {
+                                    'isRegister': true,
+                                  },
+                                )
+                              : Routefly.pop(context),
+                          size: const Size(double.infinity, 60),
+                          enable: state is! AddressLoadingState &&
+                              state is! LoadingState,
+                        ),
                       ),
                       const SizedBox(height: 10),
                     ],
