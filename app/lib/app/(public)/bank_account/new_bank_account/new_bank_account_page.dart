@@ -64,8 +64,9 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
           style: textTheme.displayLarge?.copyWith(color: colors.textColor),
         ),
         leading: IconButton(
-            icon: Icon(UIcons.regularStraight.angle_small_left),
-            onPressed: () => Routefly.pop(context)),
+          icon: Icon(UIcons.regularStraight.angle_small_left),
+          onPressed: () => Routefly.pop(context),
+        ),
         surfaceTintColor: Colors.transparent,
       ),
       body: Stack(
