@@ -7,13 +7,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class NewBankAccountPage extends StatefulWidget {
-  final String title;
-  final String buttonTitle;
-  const NewBankAccountPage({
-    super.key,
-    this.title = 'Cadastrar Conta Bancária',
-    this.buttonTitle = 'Próximo',
-  });
+  const NewBankAccountPage({super.key});
 
   @override
   State<NewBankAccountPage> createState() => _NewBankAccountPageState();
@@ -21,11 +15,11 @@ class NewBankAccountPage extends StatefulWidget {
 
 class _NewBankAccountPageState extends State<NewBankAccountPage> {
   final controller = injector.get<NewBankAccountController>();
-  bool isRegister = false;
+  late bool isRegister;
 
   @override
   void initState() {
-    isRegister = Routefly.query.arguments['isRegister'] as bool;
+    isRegister = Routefly.query.arguments?['isRegister'] as bool? ?? false;
     controller.addListener(listener);
     super.initState();
   }
@@ -92,7 +86,7 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                         text: 'Identificação do Banco',
                       ),
                       TextFormField(
-                        controller: controller.bankNumberController,
+                        controller: controller.bankNameController,
                         style: textTheme.displaySmall,
                         decoration: InputDecoration(
                           hintText: 'Informe o nome do Banco',
@@ -174,7 +168,9 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
                           ),
                         ],
                       ),
-                      const TextFieldInformation(text: 'Chave PIX da Conta'),
+                      const TextFieldInformation(
+                        text: 'Chave PIX da Conta',
+                      ),
                       TextFormField(
                         controller: controller.pixKeyController,
                         style: textTheme.displaySmall,
@@ -198,10 +194,14 @@ class _NewBankAccountPageState extends State<NewBankAccountPage> {
         ],
       ),
       bottomNavigationBar: SafeArea(
-        child: CooButton.primary(
-          label: isRegister ? 'Finalizar Cadastro' : 'Voltar',
-          onPressed: controller.save,
-        ),
+        child: ValueListenableBuilder(
+            valueListenable: controller,
+            builder: (context, state, _) {
+              return CooButton.primary(
+                label: isRegister ? 'Finalizar Cadastro' : 'Confirmar',
+                onPressed: controller.save,
+              );
+            }),
       ),
     );
   }

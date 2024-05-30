@@ -134,9 +134,6 @@ class _BankAccountPageState extends State<BankAccountPage> {
                               label: 'Cadastrar Conta Bancária',
                               onPressed: () => Routefly.push(
                                 routePaths.bankAccount.newBankAccount,
-                                arguments: {
-                                  'isRegister': true,
-                                },
                               ),
                             ),
                           ],

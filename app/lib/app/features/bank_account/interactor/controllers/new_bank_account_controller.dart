@@ -19,7 +19,7 @@ class NewBankAccountController extends BaseController {
   }) : super(NewBankAccountInitialState());
 
   final formKey = GlobalKey<FormState>();
-  final bankNumberController = TextEditingController(text: '');
+  final bankNameController = TextEditingController(text: '');
   final agencyNumberController = TextEditingController(text: '');
   final accountNumberController = TextEditingController(text: '');
   final digitNumberController = TextEditingController(text: '');
@@ -43,7 +43,7 @@ class NewBankAccountController extends BaseController {
 
     final bankAccountEntity = BankAccountEntity(
       -1,
-      bankName: bankNumberController.text,
+      bankName: bankNameController.text,
       agency: agencyNumberController.text,
       account: accountNumberController.text,
       digit: digitNumberController.text,
@@ -55,6 +55,7 @@ class NewBankAccountController extends BaseController {
       (left) => update(NewBankAccountErrorState(exception: left)),
       (right) async {
         await bankAccountController.getAll(bankAccountEntity);
+        formKey.currentState?.reset();
         update(NewBankAccountSuccessState(data: bankAccountEntity));
       },
     );
